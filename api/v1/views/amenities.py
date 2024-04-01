@@ -57,7 +57,7 @@ def create_amenity():
                  strict_slashes=False, methods=['PUT'])
 def updates_amenity(amenity_id):
     """ Updates """
-    states = storage.all("State").values()
+    states = storage.all("Amenity").values()
     state_sing = [obj.to_dict() for obj in states if obj.id == amenity_id]
     if state_sing == []:
         abort(404)
