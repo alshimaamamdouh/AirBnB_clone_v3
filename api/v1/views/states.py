@@ -8,7 +8,7 @@ from models.state import State
 
 
 # handling GET requests to retrieve all states
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', strict_slashes=False, methods=['GET'])
 def get_states():
     """ get all """
     states = storage.all(State).values()
@@ -26,7 +26,7 @@ def get_state_id(state_id):
 
 
 #  handling DELETE requests to delete a specific state by its ID.
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
     """ delete """
     state = storage.get(State, state_id)
@@ -38,7 +38,7 @@ def delete_state(state_id):
 
 
 # handling POST requests to create a new state.
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states/', strict_slashes=False, methods=['POST'])
 def create_state():
     """ create """
     data = request.get_json(force=True, silent=True)
@@ -55,7 +55,7 @@ def create_state():
 
 
 # handling PUT requests to update an existing state by its ID.
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def updates_state(state_id):
     """ Updates """
     states = storage.all("State").values()
