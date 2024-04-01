@@ -70,8 +70,8 @@ def update_user(user_id):
     request_json = request.get_json(silent=True)
     if not request_json:
         abort(400, 'Not a JSON')
-    
-     # Update the user object with the provided data
+
+    # Update the user object with the provided data
     for key, value in request_json.items():
         if key not in ['id', 'email', 'created_at', 'updated_at']:
             setattr(user, key, value)
