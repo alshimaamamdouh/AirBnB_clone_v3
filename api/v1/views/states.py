@@ -42,7 +42,7 @@ def delete_state(state_id):
 def create_state():
     """ create """
     data = request.get_json(force=True, silent=True)
-    if data is None:
+    if not data:
         abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
@@ -62,7 +62,7 @@ def updates_state(state_id):
     state_sing = [obj.to_dict() for obj in states if obj.id == state_id]
     if state_sing == []:
         abort(404)
-    if not request.get_json():
+    if not request.get_json(silent=True):
         abort(400, 'Not a JSON')
     state_sing[0]['name'] = request.json['name']
     for obj in states:
