@@ -59,15 +59,17 @@ def create_user():
                  strict_slashes=False, methods=['PUT'])
 def update_user(user_id):
     """ Updates """
-    users = storage.all("User").values()
-    user_single = [obj.to_dict() for obj in users if obj.id == user_id]
-    if user_single == []:
+    users = storage.all(User).values()
+    user_dict = [obj.to_dict() for obj in users if obj.id == user_id]
+    if not user_dict:
         abort(404)
-    if not request.get_json(silent=True):
+    request_json = request.get_json(silent=True)
+    if not request_json:
         abort(400, 'Not a JSON')
-    user_single[0]['name'] = request.json['name']
+    new_name = request_json['name']
+    user_dict[0]['name'] = new_name
     for obj in users:
         if obj.id == user_id:
-            obj.name = request.json['name']
+            obj.name = new_name
     storage.save()
-    return jsonify(user_single[0]), 200
+    return jsonify(user_dict[0]), 200
