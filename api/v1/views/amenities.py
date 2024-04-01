@@ -55,7 +55,8 @@ def create_amenity():
 
 
 # handling PUT requests to update an existing state by its ID.
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['PUT'])
 def updates_amenity(amenity_id):
     """ Updates """
     states = storage.all("State").values()
