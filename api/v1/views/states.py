@@ -17,10 +17,11 @@ def get_states():
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """ get by id """
-    state = storage.get(State, state_id)
-    if not state:
+    states = storage.all("State").values()
+    state_element = [state.to_dict() for state in states if state.id == state_id]
+    if not state_element:
         abort(404)
-    return (jsonify(state.to_dict()))
+    return jsonify(state_element[0])
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
