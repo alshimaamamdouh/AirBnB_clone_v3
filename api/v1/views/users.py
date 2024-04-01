@@ -48,17 +48,19 @@ def create_user():
         abort(400, 'Missing email')
     if 'password' not in data:
         abort(400, 'Missing password')
+    # Create a new user object
     new_user = User(**data)
     storage.new(new_user)
     storage.save()
+    # Return the new user object with status code 201
     return jsonify(new_user.to_dict()), 201
 
 
-# handling PUT requests to update an existing state by its ID.
+# handling PUT requests to update an existing user by its ID.
 @app_views.route('/users/<user_id>',
                  strict_slashes=False, methods=['PUT'])
 def update_user(user_id):
-    """ Updates a user's name """
+    """ Updates a user """
     # Get the user object with the specified ID
     user = storage.get(User, user_id)
     if not user:
@@ -68,32 +70,12 @@ def update_user(user_id):
     request_json = request.get_json(silent=True)
     if not request_json:
         abort(400, 'Not a JSON')
-
-    # Get the new name from the JSON data
-    new_name = request_json.get('name')
-    if not new_name:
-        abort(400, 'Missing name')
-
-    # Update the user's name
-    user.name = new_name
+    
+     # Update the user object with the provided data
+    for key, value in request_json.items():
+        if key not in ['id', 'email', 'created_at', 'updated_at']:
+            setattr(user, key, value)
     storage.save()  # Save changes to the database
 
     # Return the updated user's details
     return jsonify(user.to_dict()), 200
-
-    # users = storage.all(User).values()
-    # user_dict = [obj.to_dict() for obj in users if obj.id == user_id]
-    # if not user_dict:
-    #     abort(404)
-    #  # Get JSON data from the request
-    # request_json = request.get_json(silent=True)
-    # if not request_json:
-    #     abort(400, 'Not a JSON')
-    #  # Get the new name from the JSON data
-    # new_name = request_json['name']
-    # user_dict[0]['name'] = new_name
-    # for obj in users:
-    #     if obj.id == user_id:
-    #         obj.name = new_name
-    # storage.save()
-    # return jsonify(user_dict[0]), 200
