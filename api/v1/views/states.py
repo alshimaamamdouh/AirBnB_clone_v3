@@ -7,6 +7,7 @@ from models import storage
 from models.state import State
 
 
+# handling GET requests to retrieve all states
 @app_views.route('/states', methods=['GET'])
 def get_states():
     """ get all """
@@ -14,8 +15,9 @@ def get_states():
     return jsonify([state.to_dict() for state in states])
 
 
+# handling GET requests to retrieve a specific state by its ID.
 @app_views.route('/states/<state_id>', methods=['GET'])
-def get_state(state_id):
+def get_state_id(state_id):
     """ get by id """
     state = storage.get(State, state_id)
     if not state:
@@ -23,6 +25,7 @@ def get_state(state_id):
     return (jsonify(state.to_dict()))
 
 
+#  handling DELETE requests to delete a specific state by its ID.
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ delete """
@@ -34,12 +37,14 @@ def delete_state(state_id):
     return (jsonify({}), 200)
 
 
+# handling POST requests to create a new state.
 @app_views.route('/states/', methods=['POST'])
 def create_state():
     """ create """
-    if request.get_json() is None:
+    data = request.get_json(force=True, silent=True)
+    if data is None:
         abort(400, 'Not a JSON')
-    if 'name' not in request.get_json():
+    if 'name' not in data:
         abort(400, 'Missing name')
     states = []
     create_state = State(name=request.json['name'])
@@ -49,6 +54,7 @@ def create_state():
     return jsonify(states[0]), 201
 
 
+# handling PUT requests to update an existing state by its ID.
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def updates_state(state_id):
     """ Updates """
