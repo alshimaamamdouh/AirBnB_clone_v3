@@ -26,7 +26,7 @@ def get_state_id(state_id):
 
 
 #  handling DELETE requests to delete a specific state by its ID.
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ delete """
     state = storage.get(State, state_id)
