@@ -57,17 +57,17 @@ def create_user():
 # handling PUT requests to update an existing state by its ID.
 @app_views.route('/users/<user_id>',
                  strict_slashes=False, methods=['PUT'])
-def updates_user(user_id):
+def update_user(user_id):
     """ Updates """
-    users = storage.all("user").values()
-    state_sing = [obj.to_dict() for obj in users if obj.id == user_id]
-    if state_sing == []:
+    users = storage.all("User").values()
+    user_single = [obj.to_dict() for obj in users if obj.id == user_id]
+    if user_single == []:
         abort(404)
     if not request.get_json(silent=True):
         abort(400, 'Not a JSON')
-    state_sing[0]['name'] = request.json['name']
+    user_single[0]['name'] = request.get_json['name']
     for obj in users:
         if obj.id == user_id:
             obj.name = request.json['name']
     storage.save()
-    return jsonify(state_sing[0]), 200
+    return jsonify(user_single[0]), 200
