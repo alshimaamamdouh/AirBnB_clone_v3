@@ -8,6 +8,18 @@ from models.place import Place
 from models.city import City
 
 
+# handling GET requests to retrieve a specific place in a city by its ID.
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
+def get_places(city_id):
+    """ get all place in a city by id """
+    city_obj = storage.get(City, city_id)
+    if not city_obj:
+        abort(404)
+    places = []
+    for city in city_obj.places:
+        places.append(city.to_dict())
+    return jsonify(places)
+
 
 # Retrieves a Place object by its ID.
 @app_views.route('/places/<place_id>', methods=['GET'])
@@ -35,7 +47,7 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places', 
                  strict_slashes=False, methods=['POST'])
 def create_place(city_id):
-    """ create """
+    """ create place"""
     # Search for city_id
     city = storage.get(City, city_id)
     if not city:
@@ -61,7 +73,7 @@ def create_place(city_id):
 def update_place(place_id):
     """ Updates a place """
     # Get the place object with the specified ID
-    place = storage.get(place, place_id)
+    place = storage.get(Place, place_id)
     if not place:
         abort(404)  # place not found
 
