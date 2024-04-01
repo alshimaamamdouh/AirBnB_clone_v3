@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""states"""
+"""amenities"""
 
 from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
@@ -7,7 +7,7 @@ from models import storage
 from models.amenity import Amenity
 
 
-# handling GET requests to retrieve all states
+# handling GET requests to retrieve all amenities
 @app_views.route('/amenities', strict_slashes=False, methods=['GET'])
 def get_amenities():
     """ get all """
@@ -57,14 +57,14 @@ def create_amenity():
                  strict_slashes=False, methods=['PUT'])
 def updates_amenity(amenity_id):
     """ Updates """
-    states = storage.all("Amenity").values()
-    state_sing = [obj.to_dict() for obj in states if obj.id == amenity_id]
+    amenities = storage.all("Amenity").values()
+    state_sing = [obj.to_dict() for obj in amenities if obj.id == amenity_id]
     if state_sing == []:
         abort(404)
     if not request.get_json(silent=True):
         abort(400, 'Not a JSON')
     state_sing[0]['name'] = request.json['name']
-    for obj in states:
+    for obj in amenities:
         if obj.id == amenity_id:
             obj.name = request.json['name']
     storage.save()
