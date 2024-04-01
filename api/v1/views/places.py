@@ -6,10 +6,12 @@ from api.v1.views import app_views
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 # handling GET requests to retrieve a specific place in a city by its ID.
-@app_views.route('/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places', strict_slashes=False,
+                 methods=['GET'])
 def get_places(city_id):
     """ get all place in a city by id """
     city_obj = storage.get(City, city_id)
@@ -22,7 +24,8 @@ def get_places(city_id):
 
 
 # Retrieves a Place object by its ID.
-@app_views.route('/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>', strict_slashes=False,
+                 methods=['GET'])
 def get_place_id(place_id):
     """ get by id """
     place = storage.get(Place, place_id)
@@ -44,7 +47,7 @@ def delete_place(place_id):
 
 
 # handling POST requests to create a new Place.
-@app_views.route('/cities/<city_id>/places', 
+@app_views.route('/cities/<city_id>/places',
                  strict_slashes=False, methods=['POST'])
 def create_place(city_id):
     """ create place"""
@@ -55,8 +58,13 @@ def create_place(city_id):
     data = request.get_json(force=True, silent=True)
     if not data:
         abort(400, 'Not a JSON')
+    # Handle user_id
     if 'user_id' not in data:
         abort(400, 'Missing user_id')
+    user = storage.get(User, data['user_id'])
+    if not user:
+        abort(404)
+    # Handle name
     if 'name' not in data:
         abort(400, 'Missing name')
     # Create a new place object
