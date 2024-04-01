@@ -65,7 +65,7 @@ def update_user(user_id):
         abort(404)
     if not request.get_json(silent=True):
         abort(400, 'Not a JSON')
-    user_single[0]['name'] = request.get_json['name']
+    user_single[0]['name'] = request.json['name']
     for obj in users:
         if obj.id == user_id:
             obj.name = request.json['name']
