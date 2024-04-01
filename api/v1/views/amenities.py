@@ -9,7 +9,7 @@ from models.amenity import Amenity
 
 # handling GET requests to retrieve all states
 @app_views.route('/amenities', strict_slashes=False, methods=['GET'])
-def get_states():
+def get_amenities():
     """ get all """
     amenities = storage.all(Amenity).values()
     return jsonify([amen.to_dict() for amen in amenities])
@@ -17,7 +17,7 @@ def get_states():
 
 # handling GET requests to retrieve a specific state by its ID.
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
-def get_state_id(amenity_id):
+def get_amenity_id(amenity_id):
     """ get by id """
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
@@ -27,7 +27,7 @@ def get_state_id(amenity_id):
 
 #  handling DELETE requests to delete a specific state by its ID.
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
-def delete_state(amenity_id):
+def delete_amenity(amenity_id):
     """ delete """
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
@@ -56,7 +56,7 @@ def create_amenity():
 
 # handling PUT requests to update an existing state by its ID.
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
-def updates_state(amenity_id):
+def updates_amenity(amenity_id):
     """ Updates """
     states = storage.all("State").values()
     state_sing = [obj.to_dict() for obj in states if obj.id == amenity_id]
