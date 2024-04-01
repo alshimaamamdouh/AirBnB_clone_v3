@@ -44,8 +44,8 @@ def create_user():
     data = request.get_json(force=True, silent=True)
     if not data:
         abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
+    if 'email' not in data:
+        abort(400, 'Missing email')
     if 'password' not in data:
         abort(400, 'Missing password')
     new_user = User(name=data['name'], password=data['password'])
