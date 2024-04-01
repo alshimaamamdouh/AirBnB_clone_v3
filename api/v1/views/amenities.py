@@ -46,12 +46,10 @@ def create_amenity():
         abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
-    states = []
-    new_amenity = Amenity(name=request.json['name'])
+    new_amenity = Amenity(name=data['name'])
     storage.new(new_amenity)
     storage.save()
-    states.append(new_amenity.to_dict())
-    return jsonify(states[0]), 201
+    return jsonify(new_amenity.to_dict()), 201
 
 
 # handling PUT requests to update an existing state by its ID.
