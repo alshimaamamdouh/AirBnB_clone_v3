@@ -8,7 +8,6 @@ from models.state import State
 from models.city import City
 
 
-
 # handling GET requests to retrieve a specific city in a state by its ID.
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_cities(state_id):
@@ -20,6 +19,7 @@ def get_cities(state_id):
     for city in state_obj.cities:
         cities.append(city.to_dict())
     return jsonify(cities)
+
 
 # handling GET requests to retrieve city obj.
 @app_views.route('/cities/<city_id>', methods=['GET'])
@@ -44,7 +44,8 @@ def delete_city(city_id):
 
 
 # handling POST requests to create a new city.
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
+@app_views.route('/states/<state_id>/cities', strict_slashes=False,
+                 methods=['POST'])
 def create_city(state_id):
     """ create city in a state """
     state_obj = storage.get(State, state_id)
@@ -56,7 +57,7 @@ def create_city(state_id):
         abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
-    
+
     new_city = City(name=data['name'], state_id=state_id)
     storage.new(new_city)
     storage.save()
@@ -80,4 +81,3 @@ def update_city(city_id):
             obj.name = request.json['name']
     storage.save()
     return jsonify(city_list[0]), 200
-
