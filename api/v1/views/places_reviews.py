@@ -13,7 +13,7 @@ from api.v1.views import app_views
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False,
                  methods=['GET'])
 def get_reviews_by_place(place_id):
-    """ get """
+    """ get method """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
