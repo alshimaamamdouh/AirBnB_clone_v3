@@ -28,7 +28,7 @@ def get_amenity_id(amenity_id):
 #  handling DELETE requests to delete a specific state by its ID.
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenity(amenity_id):
-    """ delete """
+    """ delete method """
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
