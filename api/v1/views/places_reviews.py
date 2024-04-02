@@ -72,7 +72,7 @@ def create_review(place_id):
 @app_views.route('/reviews/<review_id>',
                  strict_slashes=False, methods=['PUT'])
 def update_review(review_id):
-    """ update """
+    """ update  method"""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
