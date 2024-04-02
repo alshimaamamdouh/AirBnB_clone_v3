@@ -81,7 +81,7 @@ def update_review(review_id):
     data = request.get_json(force=True, silent=True)
     for key, value in data.items():
         if key not in ['id', 'user_id', 'place_id',
-                       'created_at', 'updated_at']: 
+                       'created_at', 'updated_at']:
             setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict()), 200
