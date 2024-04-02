@@ -11,7 +11,7 @@ from models.city import City
 # handling GET requests to retrieve a specific city in a state by its ID.
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_cities(state_id):
-    """ get all cities in a state by id """
+    """ get all cities in a state by id method"""
     state_obj = storage.get(State, state_id)
     if not state_obj:
         abort(404)
