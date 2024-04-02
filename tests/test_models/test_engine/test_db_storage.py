@@ -87,7 +87,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-     def test_get(self):
+    def test_get(self):
         '''
             Test if get method retrieves obj requested
         '''
