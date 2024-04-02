@@ -5,6 +5,7 @@ from models import storage
 from api.v1.views import app_views
 from os import getenv
 from flask import Flask, make_response, jsonify
+from flask_cors import CORS
 
 # flask app
 app = Flask(__name__)
@@ -12,7 +13,8 @@ app = Flask(__name__)
 # register blueprint
 app.register_blueprint(app_views)
 
-# method to handle app
+# Create CORS instance allowing /* for 0.0.0.0
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
