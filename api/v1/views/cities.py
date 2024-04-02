@@ -47,7 +47,7 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities', strict_slashes=False,
                  methods=['POST'])
 def create_city(state_id):
-    """ create city in a state """
+    """ create city in a state "method"""
     state_obj = storage.get(State, state_id)
     if not state_obj:
         abort(404)
