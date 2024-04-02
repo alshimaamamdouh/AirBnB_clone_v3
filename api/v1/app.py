@@ -19,7 +19,7 @@ cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def close_storage(exception):
-    """ close """
+    """ close method"""
     storage.close()
 
 # Handler for 404 errors
