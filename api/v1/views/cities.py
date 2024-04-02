@@ -24,7 +24,7 @@ def get_cities(state_id):
 # handling GET requests to retrieve city obj.
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city_id(city_id):
-    """ get by id """
+    """ get by id "method"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
