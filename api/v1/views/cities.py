@@ -34,7 +34,7 @@ def get_city_id(city_id):
 #  handling DELETE requests to delete a specific city by its ID.
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
-    """ delete """
+    """ delete method"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
